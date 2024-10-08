@@ -1,3 +1,10 @@
+const platformimg = new Image();
+platformimg.src = './Seasonal Tilesets/1 - Grassland/Background parts/2.png';
+
+const backroundimg =new Image();
+backroundimg.src='./Seasonal Tilesets/1 - Grassland/background_glacial_mountains.png';
+
+
 const canvas=document.querySelector('canvas');
 
 const c=canvas.getContext('2d');
@@ -30,22 +37,27 @@ update(){
 };}
 
 class Platform{
-  constructor({x,y}){
+  constructor({x,y,image}){
     this.position={x,y}
     
-  this.width=200;
-  this.height=20;
+  this.width=image.width;
+  this.height=image.height-100;
+  this.image=image;
+  console.log(image.width);
 
 }
    draw(){
-    c.fillStyle='black';
-    c.fillRect(this.position.x,this.position.y,this.width,this.height);
+    c.drawImage(this.image,this.position.x,this.position.y)
    }
 
 }
 
+const image=new Image();
+image.src='./Seasonal Tilesets/1 - Grassland/Background parts/2.png';
+
+
 const player1=new player();
-const platforms=[new Platform({x:200,y:600}),new Platform({x:500,y:700})];
+const platforms=[new Platform({x:-1,y:750,image}),new Platform({x:image.width-2,y:750,image})];
 const keys={
   right:{
     pressed:false
@@ -60,11 +72,11 @@ let scrolloff=0;
 function animate(){
     requestAnimationFrame(animate);
     c.clearRect(0,0,canvas.width,canvas.height);
-    player1.update();
+  
     platforms.forEach(platform=>{
       platform.draw();
     })
-
+    player1.update();
 
     if(keys.right.pressed&&player1.position.x<=400){
       player1.velocity.x+=5;
@@ -101,6 +113,7 @@ function animate(){
     platforms.forEach(platform=>{
     if(player1.position.y + player1.height<=platform.position.y && player1.position.y+player1.height+player1.velocity.y>=platform.position.y && player1.position.x+player1.width>=platform.position.x && player1.position.x<=platform.position.x+platform.width){
       player1.velocity.y=0;
+      
     }})
     if(scrolloff>=2000){
       console.log('game over');
