@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nohara's Adventure</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: url(assets/wp12841258-shinchan-house-wallpapers.jpg) no-repeat center center fixed;
+
+            background-size: cover;
+            color: #fff;
+            overflow: hidden;
+        }
+        .hero {
+            padding-top: 400px;
+            height: calc(100vh - 400px);
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        h1 {
+            font-size: 4em;
+            text-shadow: 2px 2px 4px #666666;
+            z-index: 10;
+            
+        }
+        a {
+            text-decoration: none;
+        }
+        button {
+            position: relative;
+            font-size: 1.5em;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #ffcc00;
+            color: #000;
+            cursor: pointer;
+            box-shadow: 2px 2px 10px #000;
+            transition: transform 0.2s;
+            z-index: 10;
+        }
+        button:hover {
+            transform: translateY(3px);
+            box-shadow: 2px 2px 5px #000;
+        }
+        .car-element{
+            
+          
+            display: flex;
+        }
+        .car-element img{
+          
+        width: 500px;
+        align-self: flex-end;
+        }
+        .car-element::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            pointer-events: none;
+        }
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            
+        }
+       
+    </style>
+</head>
+<body>
+   <div class="hero">
+         <h1>Nohara's Adventure</h1>
+         <a href="game.html">
+            <button>Let's Go</button>
+         </a>
+           <div class="car-element">
+            <img src="assets/Untitled-1.png" alt="" id="car">
+           </div>
+   </div>
+   <div class="stars" id="stars"></div>
+   <script>
+    const car = document.getElementById('car');
+    let carPosition = -car.width*2;
+    const middlePosition = window.innerWidth / 2 - car.width*1.4 ;
+
+    function animateCar() {
+        if (carPosition < middlePosition) {
+            carPosition += 10;
+            car.style.transform = `translateX(${carPosition}px)`;
+            requestAnimationFrame(animateCar);
+        }
+    }
+
+    animateCar();
+
+
+   
+    const starsContainer = document.getElementById('stars');
+    const numStars = 200;
+
+    for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.animationDelay = `${Math.random() * 2}s`;
+        starsContainer.appendChild(star);
+    }
+    function blinkStars() {
+        const stars = document.querySelectorAll('.star');
+        stars.forEach(star => {
+            star.style.opacity = Math.random() ;
+        });
+        setTimeout(blinkStars, 1000);
+    }
+
+    blinkStars();
+</script>
+ 
+</body>
+</html>
