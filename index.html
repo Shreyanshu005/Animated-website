@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nohara's Adventure</title>
+    <title>Fox Trail's Adventure</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: url(assets/wp12841258-shinchan-house-wallpapers.jpg) no-repeat center center fixed;
+            background: url(assets/background1.jpg) no-repeat center center fixed;
 
             background-size: cover;
             color: #fff;
@@ -50,26 +50,8 @@
             transform: translateY(3px);
             box-shadow: 2px 2px 5px #000;
         }
-        .car-element{
-            
-          
-            display: flex;
-        }
-        .car-element img{
-          
-        width: 500px;
-        align-self: flex-end;
-        }
-        .car-element::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            pointer-events: none;
-        }
+    
+
         .stars {
             position: absolute;
             top: 0;
@@ -93,29 +75,17 @@
 </head>
 <body>
    <div class="hero">
-         <h1>Nohara's Adventure</h1>
+         <h1>Fox Trail's Adventure</h1>
          <a href="game.html">
             <button>Let's Go</button>
          </a>
-           <div class="car-element">
-            <img src="assets/Untitled-1.png" alt="" id="car">
-           </div>
+          
    </div>
    <div class="stars" id="stars"></div>
    <script>
-    const car = document.getElementById('car');
-    let carPosition = -car.width*2;
-    const middlePosition = window.innerWidth / 2 - car.width*1.4 ;
 
-    function animateCar() {
-        if (carPosition < middlePosition) {
-            carPosition += 10;
-            car.style.transform = `translateX(${carPosition}px)`;
-            requestAnimationFrame(animateCar);
-        }
-    }
 
-    animateCar();
+   
 
 
    

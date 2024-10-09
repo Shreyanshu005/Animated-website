@@ -1,9 +1,9 @@
 const platformimg = new Image();
-platformimg.src = './Seasonal Tilesets/1 - Grassland/Background parts/2.png';
+platformimg.src = './Seasonal Tilesets/1 - Grassland/Background parts/4.png';
 const walkR=new Image();
 walkR.src='assets/right.png';
 const idleR=new Image();
-idleR.src='assets/idleshin.png';
+idleR.src='assets/fox.png';
 
 // const backroundimg = new Image();
 // backroundimg.src = './Seasonal Tilesets/1 - Grassland/Background parts/background_glacial_mountains.png';
@@ -14,30 +14,34 @@ const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
+function drawText() {
+  c.font = '25px Comic Sans MS';
+  c.fillStyle = 'black';
+  c.fillText('Use W A S D for controls!', 10, 30);
+}
 
 console.log(c);
 const gravity = 1.5;
 class player {
   constructor() {
     this.position = { x: 100, y: 100 }
-    this.velocity = { x: 0, y: 0 }
-    this.width = 30;
-    this.height = 30;
+    this.velocity = { x: 0, y:0 }
+    this.width = 173;
+    this.height = 153;
 this.image=createImg(idleR);
 this.frames=0;
   }
   draw() {
-    c.fillStyle = 'red';
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
-    // c.drawImage(this.image,32*this.frames,0,32,32,
-    //    this.position.x, this.position.y,this.width/5-10,this.height)
+    // c.fillStyle = 'red';
+    // c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    c.drawImage(this.image,173*this.frames,0,173,159,
+       this.position.x, this.position.y+25,this.width,this.height)
        
 
   }
   update() {
     this.frames++;
-    if(this.frames>5){
+    if(this.frames>9){
       this.frames=0}
     this.draw();
     this.position.x += this.velocity.x;
@@ -92,8 +96,8 @@ let platimg=createImg(platformimg);
 
 
 let player1 = new player();
-let platforms = [new Platform({ x: -1, y: 750, image:platformimg }), new Platform({ x: platformimg.width - 2, y: 750, image:platformimg }), new Platform({ x: platformimg.width*2+100, y: 750, image:platformimg }),
-  new Platform({ x: platformimg.width*3+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*4+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*5+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*5+250, y: 680, image:platformimg }),new Platform({ x: platformimg.width*6+410, y: 750, image:platformimg })];
+let platforms = [new Platform({ x: -1, y: 630, image:platformimg }), new Platform({ x: platformimg.width+200, y: 630, image:platformimg }), new Platform({ x: platformimg.width*2+500, y: 630, image:platformimg }),
+  new Platform({ x: platformimg.width*3+790, y: 630, image:platformimg }),new Platform({ x: platformimg.width*4+1000, y: 630, image:platformimg }),new Platform({ x: platformimg.width*5+1250, y: 630, image:platformimg }),new Platform({ x: platformimg.width*6+1250, y: 630, image:platformimg }),new Platform({ x: platformimg.width*6+1250, y: 440, image:platformimg })];
 let objs = [new Objects({ x: -1000, y: -1000,image:createImg(platformimg) })];
 
 const keys = {
@@ -116,8 +120,8 @@ function init(){
 
 
  player1 = new player();
- platforms = [new Platform({ x: -1, y: 750, image:platformimg }), new Platform({ x: platformimg.width - 2, y: 750, image:platformimg }), new Platform({ x: platformimg.width*2+100, y: 750, image:platformimg }),
-  new Platform({ x: platformimg.width*3+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*4+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*5+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*5+250, y: 680, image:platformimg }),new Platform({ x: platformimg.width*6+410, y: 750, image:platformimg })];
+ platforms = [new Platform({ x: -1, y: 630, image:platformimg }), new Platform({ x: platformimg.width+200, y: 630, image:platformimg }), new Platform({ x: platformimg.width*2+500, y: 630, image:platformimg }),
+  new Platform({ x: platformimg.width*3+790, y: 630, image:platformimg }),new Platform({ x: platformimg.width*4+1000, y: 630, image:platformimg }),new Platform({ x: platformimg.width*5+1250, y: 630, image:platformimg }),new Platform({ x: platformimg.width*6+1250, y: 630, image:platformimg }),new Platform({ x: platformimg.width*6+1250, y: 440, image:platformimg })];
  objs = [new Objects({ x: -1000, y: -1000,image:createImg(platformimg) })];
 
 
@@ -133,6 +137,7 @@ function animate() {
     platform.draw();
   })
   player1.update();
+  drawText();
 
   if (keys.right.pressed && player1.position.x <= 400) {
     player1.velocity.x = Math.min(player1.velocity.x + 5, 10);
@@ -147,7 +152,7 @@ function animate() {
       scrolloff += 5
       platforms.forEach(platform => {
 
-        platform.position.x -= 5;
+        platform.position.x -= 10;
 
       })
 
@@ -155,7 +160,7 @@ function animate() {
       scrolloff -= 5;
       platforms.forEach(platform => {
 
-        platform.position.x += 5;
+        platform.position.x += 10;
 
 
       }
