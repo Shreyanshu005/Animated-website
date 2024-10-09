@@ -4,6 +4,11 @@ const walkR=new Image();
 walkR.src='assets/right.png';
 const idleR=new Image();
 idleR.src='assets/fox.png';
+const lion=new Image();
+lion.src='assets/lion.png';
+const snake=new Image();
+snake.src='assets/snake.png';
+
 
 
 
@@ -56,6 +61,7 @@ this.frames=0;
   };
 }
 
+
 class Platform {
   constructor({ x, y, image }) {
     this.position = { x, y }
@@ -87,6 +93,11 @@ class Objects {
   }
 
 }
+
+
+
+let random = Math.random() < 0.5;
+
 function createImg(imageSrc){
   const image = new Image();
   image.src = imageSrc.src;
@@ -101,6 +112,8 @@ let player1 = new player();
 let platforms = [new Platform({ x: -1, y: 630, image:platformimg }), new Platform({ x: platformimg.width+200, y: 630, image:platformimg }), new Platform({ x: platformimg.width*2+500, y: 630, image:platformimg }),
   new Platform({ x: platformimg.width*3+790, y: 630, image:platformimg }),new Platform({ x: platformimg.width*4+1000, y: 630, image:platformimg }),new Platform({ x: platformimg.width*5+1250, y: 630, image:platformimg }),new Platform({ x: platformimg.width*6+1250, y: 630, image:platformimg }),new Platform({ x: platformimg.width*6+1250, y: 440, image:platformimg })];
 let objs = [new Objects({ x: -1000, y: -1000,image:createImg(platformimg) })];
+
+
 
 let keys = {
   right: {
