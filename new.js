@@ -1,5 +1,9 @@
 const platformimg = new Image();
 platformimg.src = './Seasonal Tilesets/1 - Grassland/Background parts/2.png';
+const walkR=new Image();
+walkR.src='assets/right.png';
+const idleR=new Image();
+idleR.src='assets/idleshin.png';
 
 // const backroundimg = new Image();
 // backroundimg.src = './Seasonal Tilesets/1 - Grassland/Background parts/background_glacial_mountains.png';
@@ -11,6 +15,7 @@ const c = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+
 console.log(c);
 const gravity = 1.5;
 class player {
@@ -19,13 +24,21 @@ class player {
     this.velocity = { x: 0, y: 0 }
     this.width = 30;
     this.height = 30;
-
+this.image=createImg(idleR);
+this.frames=0;
   }
   draw() {
     c.fillStyle = 'red';
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    // c.drawImage(this.image,32*this.frames,0,32,32,
+    //    this.position.x, this.position.y,this.width/5-10,this.height)
+       
+
   }
   update() {
+    this.frames++;
+    if(this.frames>5){
+      this.frames=0}
     this.draw();
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
@@ -73,17 +86,15 @@ function createImg(imageSrc){
   image.src = imageSrc.src;
   return image;
 }
-function init(){
-  
-}
 
-const platimg=createImg(platformimg);
+let platimg=createImg(platformimg);
 
 
 
-const player1 = new player();
-const platforms = [new Platform({ x: -1, y: 750, image:platformimg }), new Platform({ x: platformimg.width - 2, y: 750, image:platformimg }), new Platform({ x: platformimg.width*2+100, y: 750, image:platformimg })];
-const objs = [new Objects({ x: -1000, y: -1000,image:createImg(platformimg) })];
+let player1 = new player();
+let platforms = [new Platform({ x: -1, y: 750, image:platformimg }), new Platform({ x: platformimg.width - 2, y: 750, image:platformimg }), new Platform({ x: platformimg.width*2+100, y: 750, image:platformimg }),
+  new Platform({ x: platformimg.width*3+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*4+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*5+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*5+250, y: 680, image:platformimg }),new Platform({ x: platformimg.width*6+410, y: 750, image:platformimg })];
+let objs = [new Objects({ x: -1000, y: -1000,image:createImg(platformimg) })];
 
 const keys = {
   right: {
@@ -96,6 +107,25 @@ const keys = {
 
 let scrolloff = 0;
 
+function init(){
+
+
+
+ platimg=createImg(platformimg);
+
+
+
+ player1 = new player();
+ platforms = [new Platform({ x: -1, y: 750, image:platformimg }),
+   new Platform({ x: platformimg.width - 2, y: 750, image:platformimg }),
+    new Platform({ x: platformimg.width*2+100, y: 750, image:platformimg }),
+    new Platform({ x: platformimg.width*3+250, y: 750, image:platformimg })];
+ objs = [new Objects({ x: -1000, y: -1000,image:createImg(platformimg) })];
+
+
+
+ scrolloff = 0;
+}
 function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
@@ -107,10 +137,10 @@ function animate() {
   player1.update();
 
   if (keys.right.pressed && player1.position.x <= 400) {
-    player1.velocity.x += 5;
+    player1.velocity.x = Math.min(player1.velocity.x + 5, 10);
 
-  } else if (keys.left.pressed && player1.position.x >= 100) {
-    player1.velocity.x -= 5;
+  } else if ((keys.left.pressed && player1.position.x >= 100)||keys.left.pressed && scrolloff===0&&player1.position.x>0) {
+    player1.velocity.x = Math.max(player1.velocity.x - 5, -10);
   }
   else {
     player1.velocity.x = 0;
@@ -123,7 +153,7 @@ function animate() {
 
       })
 
-    } else if (keys.left.pressed) {
+    } else if (keys.left.pressed&&scrolloff>0) {
       scrolloff -= 5;
       platforms.forEach(platform => {
 
@@ -141,7 +171,10 @@ function animate() {
   platforms.forEach(platform => {
     if (player1.position.y + player1.height <= platform.position.y && player1.position.y + player1.height + player1.velocity.y >= platform.position.y && player1.position.x + player1.width >= platform.position.x && player1.position.x <= platform.position.x + platform.width) {
       player1.velocity.y = 0;
+      // player1.position.y = platform.position.y - player1.height;
 
+
+    
     }
   })
   if (scrolloff >= 2000) {
@@ -157,7 +190,10 @@ animate();
 document.addEventListener('keydown', ({ keyCode }) => {
   switch (keyCode) {
     case 87:
-      player1.velocity.y -= 15;
+      
+    if (player1.velocity.y === 0) {
+      player1.velocity.y -= 25;
+    }
       break;
 
     case 68:
@@ -171,9 +207,7 @@ document.addEventListener('keydown', ({ keyCode }) => {
 });
 document.addEventListener('keyup', ({ keyCode }) => {
   switch (keyCode) {
-    case 87:
-      player1.velocity.y -= 15;
-      break;
+  
 
     case 68:
       keys.right.pressed = false;
