@@ -5,8 +5,10 @@ walkR.src='assets/right.png';
 const idleR=new Image();
 idleR.src='assets/fox.png';
 
-// const backroundimg = new Image();
-// backroundimg.src = './Seasonal Tilesets/1 - Grassland/Background parts/background_glacial_mountains.png';
+
+
+
+
 
 
 const canvas = document.querySelector('canvas');
@@ -32,12 +34,13 @@ this.image=createImg(idleR);
 this.frames=0;
   }
   draw() {
-    // c.fillStyle = 'red';
-    // c.fillRect(this.position.x, this.position.y, this.width, this.height);
-    c.drawImage(this.image,173*this.frames,0,173,159,
-       this.position.x, this.position.y+25,this.width,this.height)
-       
-
+    const frameX = keys.right.pressed||keys.left.pressed ? 173 * this.frames : 0;
+    c.drawImage(
+      this.image,
+      frameX, 0, 173, 159,
+      this.position.x, this.position.y + 25,
+      this.width, this.height
+    );
   }
   update() {
     this.frames++;
@@ -48,7 +51,6 @@ this.frames=0;
     this.position.y += this.velocity.y;
     if (this.position.y + this.height + this.velocity.y <= canvas.height)
       this.velocity.y += gravity;
-    // else this.velocity.y = 0;
 
 
   };
@@ -100,7 +102,7 @@ let platforms = [new Platform({ x: -1, y: 630, image:platformimg }), new Platfor
   new Platform({ x: platformimg.width*3+790, y: 630, image:platformimg }),new Platform({ x: platformimg.width*4+1000, y: 630, image:platformimg }),new Platform({ x: platformimg.width*5+1250, y: 630, image:platformimg }),new Platform({ x: platformimg.width*6+1250, y: 630, image:platformimg }),new Platform({ x: platformimg.width*6+1250, y: 440, image:platformimg })];
 let objs = [new Objects({ x: -1000, y: -1000,image:createImg(platformimg) })];
 
-const keys = {
+let keys = {
   right: {
     pressed: false
   },
@@ -112,8 +114,9 @@ const keys = {
 let scrolloff = 0;
 
 function init(){
+  
 
-
+   
 
  platimg=createImg(platformimg);
 
@@ -129,6 +132,7 @@ function init(){
  scrolloff = 0;
 }
 function animate() {
+  
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -174,17 +178,20 @@ function animate() {
   platforms.forEach(platform => {
     if (player1.position.y + player1.height <= platform.position.y && player1.position.y + player1.height + player1.velocity.y >= platform.position.y && player1.position.x + player1.width >= platform.position.x && player1.position.x <= platform.position.x + platform.width) {
       player1.velocity.y = 0;
-      // player1.position.y = platform.position.y - player1.height;
 
 
     
     }
   })
-  if (scrolloff >= 2000) {
-    console.log('game over');
+  if (scrolloff >= 3910) {
+   
+    
+    init();
+    
   }
   if(player1.position.y>=canvas.height){
     init();
+    
   }
 }
 animate();
