@@ -116,10 +116,8 @@ function init(){
 
 
  player1 = new player();
- platforms = [new Platform({ x: -1, y: 750, image:platformimg }),
-   new Platform({ x: platformimg.width - 2, y: 750, image:platformimg }),
-    new Platform({ x: platformimg.width*2+100, y: 750, image:platformimg }),
-    new Platform({ x: platformimg.width*3+250, y: 750, image:platformimg })];
+ platforms = [new Platform({ x: -1, y: 750, image:platformimg }), new Platform({ x: platformimg.width - 2, y: 750, image:platformimg }), new Platform({ x: platformimg.width*2+100, y: 750, image:platformimg }),
+  new Platform({ x: platformimg.width*3+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*4+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*5+250, y: 750, image:platformimg }),new Platform({ x: platformimg.width*5+250, y: 680, image:platformimg }),new Platform({ x: platformimg.width*6+410, y: 750, image:platformimg })];
  objs = [new Objects({ x: -1000, y: -1000,image:createImg(platformimg) })];
 
 
